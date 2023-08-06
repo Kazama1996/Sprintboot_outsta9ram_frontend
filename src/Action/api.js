@@ -1,0 +1,20 @@
+import instance from "./axiosInstance";
+
+const customConfig = {
+  headers: {
+    "Content-Type": "application/json",
+  },
+  withCredentials: true,
+};
+
+export const SendForgotPasswordRequest = (data) => {
+  return instance.post("/api/v1/auth/forgotPassowrd", data, customConfig);
+};
+
+export const SendLoginRequest = (data) => {
+  return instance.post("/api/v1/auth/login", data, customConfig);
+};
+
+export const SendRegisterRequest = (data) => {
+  return instance.post("/api/v1/auth/register", data, customConfig);
+};
