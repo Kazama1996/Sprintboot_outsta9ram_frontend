@@ -15,6 +15,7 @@ function App() {
           <Route path="/login" Component={LoginPage} />
           <Route path="/register" Component={RegisterPage} />
           <Route path="/resetPassword" Component={ResetPasswordPage} />
+
           <Route path="/test" Component={TestPage} />
         </Routes>
       </Router>

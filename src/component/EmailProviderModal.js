@@ -30,7 +30,7 @@ const EmailProviderModal = (props) => {
             />
           </Form.Group>
           {/* Display the error message conditionally */}
-          <p className="text-danger">{props.message}</p>
+          <p className="text-danger">{props.response_message}</p>
         </Form>
       </Modal.Body>
       <Modal.Footer>

@@ -18,3 +18,7 @@ export const SendLoginRequest = (data) => {
 export const SendRegisterRequest = (data) => {
   return instance.post("/api/v1/auth/register", data, customConfig);
 };
+
+export const SendUpdatePasswordRequest = (data) => {
+  return instance.patch("/api/v1/auth/password", data, customConfig);
+};

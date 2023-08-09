@@ -1,8 +1,8 @@
 import { Container, Row, Col, Form, Button, Navbar } from "react-bootstrap";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import EmailProviderModal from "../../component/EmailProviderModal";
 import { SendForgotPasswordRequest, SendLoginRequest } from "../../Action/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 const LoginPage = () => {
   const loginEmail = useRef("");
   const loginPassword = useRef("");
@@ -10,20 +10,30 @@ const LoginPage = () => {
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
   const [forgotPasswordMessage, setForgotPasswordMessage] = useState("");
   const [loginMessage, setLoginMessage] = useState("");
-
+  const localtion = useLocation();
+  const queryParam = new URLSearchParams(localtion.search);
+  const tokenInvalid = queryParam.get("tokenInvalid");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (tokenInvalid) {
+      alert(
+        "Token is invalid Please fill your email to get a password reset link"
+      );
+    }
+  }, [tokenInvalid]);
 
   const submitForgotPasswordReset = async () => {
     const reqBody = {
       email: forgotPasswordEmail.current.value,
     };
-    console.log(reqBody.email);
 
     await SendForgotPasswordRequest(JSON.stringify(reqBody))
       .then((response) => {
         setShowForgotPasswordModal(false);
       })
       .catch((error) => {
+        console.log(error);
         if (error.response) {
           setForgotPasswordMessage(error.response.data);
         }
@@ -37,7 +47,6 @@ const LoginPage = () => {
       password: loginPassword.current.value,
     };
 
-    console.log(reqBody);
     await SendLoginRequest(JSON.stringify(reqBody))
       .then((response) => {
         navigate("/main");
