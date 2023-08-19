@@ -1,8 +1,18 @@
-import { Container, Row, Col, Form, Button, Navbar } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Navbar,
+  Image,
+} from "react-bootstrap";
 import { useRef, useState, useEffect } from "react";
 import EmailProviderModal from "../../component/EmailProviderModal";
 import { SendForgotPasswordRequest, SendLoginRequest } from "../../Action/api";
 import { useNavigate, useLocation } from "react-router-dom";
+import googleLogo from "../../material/img/google-logo.png";
+import { GOOGLE_AUTH_URL } from "../../constants/index.js";
 const LoginPage = () => {
   const loginEmail = useRef("");
   const loginPassword = useRef("");
@@ -41,6 +51,8 @@ const LoginPage = () => {
   };
 
   const submitLogin = async (event) => {
+    console.log("Handle Spring Login");
+
     event.preventDefault();
     const reqBody = {
       email: loginEmail.current.value,
@@ -58,12 +70,35 @@ const LoginPage = () => {
       });
   };
 
+  const handleGoogleLogin = (event) => {
+    console.log("Handle Google Login");
+    event.preventDefault();
+    window.location.href = GOOGLE_AUTH_URL;
+  };
+
   return (
     <Container style={{ height: "100vh" }}>
       <Row
         className="justify-content-center align-items-center"
         style={{ height: "100%" }}
       >
+        <Button
+          onClick={handleGoogleLogin}
+          style={{
+            border: "1px #dee2e6 solid",
+            margin: "30px 0px",
+            backgroundColor: "rgba(0,0,0,0.0)",
+            color: "black", // Add this line to set the font color
+            width: "100%",
+          }}
+        >
+          <Image
+            src={googleLogo}
+            alt="Button Image"
+            style={{ width: "30px", height: "30px" }}
+          />
+          Login with google
+        </Button>
         <Col xs={6}>
           <Form>
             <Form.Label>Login</Form.Label>
@@ -84,7 +119,7 @@ const LoginPage = () => {
             <div className="d-grid gap-2">
               <Button
                 variant="primary"
-                type="submit"
+                type="button"
                 onClick={submitLogin}
                 style={{ marginTop: "10px" }}
               >
@@ -95,7 +130,7 @@ const LoginPage = () => {
           <div className="d-grid gap-2">
             <Button
               variant="primary"
-              // type="submit"
+              type="button"
               onClick={() => {
                 setShowForgotPasswordModal(true);
               }}

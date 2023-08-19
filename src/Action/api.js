@@ -12,7 +12,7 @@ export const SendForgotPasswordRequest = (data) => {
 };
 
 export const SendLoginRequest = (data) => {
-  return instance.post("/api/v1/auth/login", data, customConfig);
+  return instance.post("/api/v1/auth/authentication", data, customConfig);
 };
 
 export const SendRegisterRequest = (data) => {
